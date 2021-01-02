@@ -1,0 +1,3 @@
+.Model small
+.data
+.code
