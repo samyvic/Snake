@@ -11,7 +11,15 @@ snhr BYTE 16d ; snake head row number initialization
 snhc BYTE 42d ; snake head column number initialization
 fr BYTE 0d ; food row initialization
 fc BYTE 0d ; food column initialization
+
+IrM BYTE 0d ; Index of row above current row 
+IcM BYTE 0d ; Index of column left of current column 
+IrP BYTE 0d   ; Index of row below current row 
+IcP BYTE 0d  ; Index of column right of current column 
+
 .CODE
+
+
 
 ;-----Start [Main proc]-----
 main PROC
@@ -55,6 +63,5 @@ main ENDP
 ;-----Start [generateLevel proc]-----
 
 ;-----End [generateLevel proc]-----
-; mahmoud diaaab
 
 END main
