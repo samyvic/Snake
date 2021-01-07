@@ -15,7 +15,9 @@ fc BYTE 0d ; food column initialization
 IrM BYTE 0d ; Index of row above current row 
 IcM BYTE 0d ; Index of column left of current column 
 IrP BYTE 0d   ; Index of row below current row 
-IcP BYTE 0d  ; Index of column right of current column 
+IcP BYTE 0d  ; Index of column right of current column
+hey
+
 
 .CODE
 
