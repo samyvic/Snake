@@ -65,7 +65,14 @@ ENDM
 	maxSize		EQU       255
 											
 
+;data 
+.data
 
+	speed		DWORD   60							; How fast we update the sleep function in ms
+    playerName   	BYTE    13 + 1 DUP (?)
+    choice       	BYTE    0							; menu selection variable
+
+					
 
 ;Begin of the code
 .code
@@ -103,7 +110,9 @@ PrintWalls ENDP
 ;This function is used to manage all the gameplay in sequence
 StartGame PROC										; Handles main game state logic and loop.
 	CALL	DrawTitleScreen								; Load Title Screen
-    
+
+     X00:										; Initial start game
+	CALL	DrawMainMenu									
 
 
 	RET
@@ -138,6 +147,57 @@ DrawTitleScreen PROC									; Writes the title screen stuff, nothing special
 	   
 	RET
 DrawTitleScreen ENDP
+
+;This function display main menu to make user able to choose game difficulty and put his name
+DrawMainMenu PROC									; Game settings initializing for speed
+
+	CALL	ClrScr
+	CALL	PrintWalls
+
+	mGotoxy 30, 5									; Main Menu display and name prompt
+	mWrite	"--MAIN MENU--"
+	mGotoxy 30, 7
+	mWrite	"Enter Name: "
+	mReadString playerName								; Get player name
+	mGotoxy 30, 10
+	mWrite	"--DIFFICULTY--"							; Difficulty Prompt
+	mGotoxy 30, 12  
+	mWrite	"0) Easy"						
+	mGotoxy 30, 13 
+	mWrite	"1) Normal"
+	mGotoxy 30, 14 
+	mWrite	"2) Hard"
+	mGotoxy 30, 15 
+	mWrite	"Selection: "
+
+	CALL	ReadChar    
+	MOV	choice, AL								; Get difficulty choice
+	CALL	WriteChar
+											; Pretty much a switch(choice)
+	CMP	choice, '0'								; case: '0'
+	JNE	X00									; IF it was not '0' check other cases
+	MOV	speed, 100								; IF it was, set speed to 100
+	JMP	X02									; Jump to logic at bottom
+
+    X00:
+	CMP	choice, '1'								; Same as above case
+	JNE	X01
+	MOV	speed, 75
+	JMP	X02
+
+    X01:
+	CMP	choice, '2'								; Same as above case
+	JNE	X02
+	MOV	speed, 50
+	JMP	X02
+
+    X02:
+	INVOKE	Sleep, 100
+	mGotoxy 0, 0									; Reset cursor, clear screen
+	CALL	ClrScr									; Exit main menu
+
+	RET
+DrawMainMenu ENDP
 
 
 END main
