@@ -54,6 +54,11 @@ mReadString MACRO var:REQ								; Read string from console
 	POP	ECX
 ENDM
 
+; Structs:
+AXIS STRUCT										; Struct used to put the seed of food and keep track of snake body.
+    x BYTE 0
+    y BYTE 0
+AXIS ENDS
 
 ;Some vars
 
@@ -68,13 +73,17 @@ ENDM
 ;data 
 .data
 
-	speed		DWORD   60							; How fast we update the sleep function in ms
+	speed			DWORD   100							; How fast we update the sleep function in ms
     playerName   	BYTE    13 + 1 DUP (?)
     choice       	BYTE    0							; menu selection variable
 
 	score        	DWORD   0
-					
-
+	foodChar     	BYTE   '0'
+	snakeChar    	BYTE	'#'
+	foodPoint	AXIS    <0,0>							
+	SnakeBody    	AXIS    maxSize DUP(<0,0>)	
+	
+	
 ;Begin of the code
 .code
 
@@ -113,11 +122,14 @@ StartGame PROC										; Handles main game state logic and loop.
 	CALL	DrawTitleScreen								; Load Title Screen
 
      X00:										; Initial start game
-	CALL	DrawMainMenu									
+	CALL	DrawMainMenu
+	
      X01:
+	CALL	ClrScr										
 	CALL	ScoureInfo
 	CALL	PrintWalls
-	CALL	Waitmsg
+	CALL	GenerateFood
+	call waitmsg
 
 	RET
 StartGame ENDP
@@ -253,6 +265,33 @@ ScoureInfo PROC										; Display scoure and player name
 	RET
 ScoureInfo ENDP
 
+GenerateFood PROC									; Put food on a random point
+	CALL Randomize									; Produce new random seed
+													
+	; Random X Coordinate
+	CALL Random32									; Return random (0 to FFFFFFFFh) in EAX	
+	XOR	EDX, EDX									; Quickly clears EDX (faster than moving a zero to edx)
+	MOV	ECX, maxX - 3								
+	DIV	ECX											; DIV EAX by ECX, then store EAX=Quotient, EDX=Remainder
+	INC	DL	
+	INC	DL											; Fixing a bug (printing the food in the wall)
+	MOV	foodPoint.x, DL								; Store new Random X Coordinate for Food
+
+	; Random Y Coordinate, same deal
+	CALL	Random32
+	XOR	EDX, EDX
+	MOV	ECX, maxY - 3
+	DIV	ECX
+	INC	DL
+	INC	DL
+	MOV	foodPoint.y, DL
+    
+	mGotoxy foodPoint.x, foodPoint.y				; Move cursor to the calculated random coordinate
+	MOV	AL, foodChar								
+	CALL	WriteChar								; print food character on screen
+
+	RET
+GenerateFood ENDP
 
 
 END main
