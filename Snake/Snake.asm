@@ -127,7 +127,7 @@ DrawTitleScreen PROC									; Writes the title screen stuff, nothing special
 	CALL	PrintWalls
 
 	
-			mGotoxy 22, 3									; Draw ASCII Title
+			mGotoxy 22, 3									; Draw ASCII Title "Snake"
 			mWrite	" _____                _         "	
 			mGotoxy 22, 4									
 			mWrite	"/  ___|              | |        "	
@@ -144,7 +144,7 @@ DrawTitleScreen PROC									; Writes the title screen stuff, nothing special
 
 	
 					
-	mGotoxy 32, 10									; Pretty self explanatory
+	mGotoxy 32, 10						; the project name and our names
 	mWrite	"Snake's team"
 	mGotoxy 29, 12
 	mWrite	"1-Mostafa abo bakr"
@@ -158,7 +158,7 @@ DrawTitleScreen PROC									; Writes the title screen stuff, nothing special
 	mWrite	"5-Mohamed omar"
 
 
-mGotoxy 26,18
+mGotoxy 26,18                           ; waiting msg "press any key to containue..."
 CALL  WaitMsg
 mGotoxy 0,0
 	
