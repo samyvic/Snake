@@ -184,14 +184,18 @@ DrawMainMenu PROC
 	CALL	ClrScr
 	CALL	PrintWalls
 
-	
+	MOV EAX, cyan + (black * 16)        ; make the next text cyan 
+     CALL SetTextColor
+
 	mGotoxy 26, 7
 	mWrite	"Enter Name to continue: "         ; ask the playes to input his name 
-mReadString playerName	
+    mReadString playerName	
 
 	mGotoxy 30, 10
 	mWrite	"Select level you want..."        ; ask the player to select the level
 
+	MOV EAX, Red + (black * 16)               ; make the list of level red color
+    CALL SetTextColor
 
     mGotoxy 30, 12                           ; We have three level(Easy-Normal-Hard)                   
 	mWrite	"0) Easy"                        ;the speed of the game is differant in each level						
