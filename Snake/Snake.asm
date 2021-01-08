@@ -171,55 +171,50 @@ DrawTitleScreen ENDP
 
 
 
-;This function display main menu to make user able to choose game difficulty and put his name
-DrawMainMenu PROC									; Game settings initializing for speed
+;This function display main menu to make user able to choose game Levels and type his name
+DrawMainMenu PROC									
 
 	CALL	ClrScr
 	CALL	PrintWalls
 
-	mGotoxy 30, 5									; Main Menu display and name prompt
-	mWrite	"--MAIN MENU--"
-	mGotoxy 30, 7
-	mWrite	"Enter Name: "
-	mReadString playerName								; Get player name
+	
+	mGotoxy 26, 7
+	mWrite	"Enter Name to continue: "         ; ask the playes to input his name 
+mReadString playerName	
+
 	mGotoxy 30, 10
-	mWrite	"--DIFFICULTY--"							; Difficulty Prompt
-	mGotoxy 30, 12  
-	mWrite	"0) Easy"						
-	mGotoxy 30, 13 
+	mWrite	"Select level you want..."        ; ask the player to select the level
+
+
+    mGotoxy 30, 12                           ; We have three level(Easy-Normal-Hard)                   
+	mWrite	"0) Easy"                        ;the speed of the game is differant in each level						
+	mGotoxy 30, 13                           ;the initial speed in the first level is 100 and dec by 25 ms in each level 
 	mWrite	"1) Normal"
 	mGotoxy 30, 14 
 	mWrite	"2) Hard"
 	mGotoxy 30, 15 
-	mWrite	"Selection: "
+	mWrite	"Selection: "                  
 
 	CALL	ReadChar    
-	MOV	choice, AL								; Get difficulty choice
+	MOV	choice, AL								; get the level choice
 	CALL	WriteChar
-											; Pretty much a switch(choice)
-	CMP	choice, '0'								; case: '0'
-	JNE	X00									; IF it was not '0' check other cases
-	MOV	speed, 100								; IF it was, set speed to 100
-	JMP	X02									; Jump to logic at bottom
+											; if the choice is "0"
+	CMP	choice, '0'						    ; that means this is the first level
+	JNE	X00									; if the choice isn't "0" check the other cases
+	MOV	speed, 100							; if the is "0" set the speed 100ms 
+	JMP	X02									
 
     X00:
-	CMP	choice, '1'								; Same as above case
+	CMP	choice, '1'							; Same as above case
 	JNE	X01
 	MOV	speed, 75
 	JMP	X02
 
     X01:
-	CMP	choice, '2'								; Same as above case
-	JNE	X0false
+	CMP	choice, '2'							; Same as above case
+	JNE	X02
 	MOV	speed, 50
 	JMP	X02
-
-    X0false:
-	INVOKE	Sleep, 100
-	mGotoxy 0, 0									; Reset cursor, clear screen
-	CALL	DrawMainMenu
-	RET
-
 
     X02:
 	INVOKE	Sleep, 100
