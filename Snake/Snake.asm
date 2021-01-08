@@ -121,32 +121,55 @@ StartGame ENDP
 
 ;Start game window
 
-DrawTitleScreen PROC									; Writes the title screen stuff, nothing special
-	CALL	ClrScr
-	CALL	PrintWalls
-		
-	mGotoxy 15, 4									; Draw ASCII Title
-	mWrite	"  ___                 _            __   __      _  "	
-	mGotoxy 15, 5
-	mWrite	" / __|  _ _    __ _  | |__  ___    \ \ / /     / | "
-	mGotoxy 15, 6
-	mWrite	" \__ \ | ' \  / _` | | / / / -_)    \ V /   _  | | "
-	mGotoxy 15, 7
-	mWrite	" |___/ |_||_| \__,_| |_\_\ \___|     \_/   (_) |_| "
-					
-	mGotoxy 32, 12									; Pretty self explanatory
-	mWrite	"Test Version"
-	mGotoxy 32, 14
-	mWrite	"Assembly(x86)"
-	mGotoxy 32, 16
-	mWrite	"MASM and Irvine32"
-	mGotoxy 25, 20
 
-	CALL	WaitMsg
-	mGotoxy 0, 0  
+DrawTitleScreen PROC									; Writes the title screen stuff, nothing special
+	CALL	ClrScr	
+	CALL	PrintWalls
+
+	
+			mGotoxy 22, 3									; Draw ASCII Title
+			mWrite	" _____                _         "	
+			mGotoxy 22, 4									
+			mWrite	"/  ___|              | |        "	
+			mGotoxy 22, 5									
+			mWrite	"\ `--.  _ __    __ _ | | __ ___ "	
+			mGotoxy 22, 6									
+			mWrite	" `--. \| '_ \  / _` || |/ // _ \"	
+			mGotoxy 22, 7									
+			mWrite	"/\__/ /| | | || (_| ||   <|  __/"	
+			mGotoxy 22, 8									
+			mWrite	"\____/ |_| |_| \__,_||_|\_\\___|"	
+
+
+
+	
+					
+	mGotoxy 32, 10									; Pretty self explanatory
+	mWrite	"Snake's team"
+	mGotoxy 29, 12
+	mWrite	"1-Mostafa abo bakr"
+	mGotoxy 29, 13
+	mWrite	"2-Ahmed Samy"
+	mGotoxy 29, 14
+	mWrite	"3-Mahmoud diab"
+	mGotoxy 29, 15
+	mWrite	"4-Mostafa ramzy"
+	mGotoxy 29, 16
+	mWrite	"5-Mohamed omar"
+
+
+mGotoxy 26,18
+CALL  WaitMsg
+mGotoxy 0,0
+	
+	
 	   
 	RET
 DrawTitleScreen ENDP
+
+
+
+
 
 ;This function display main menu to make user able to choose game difficulty and put his name
 DrawMainMenu PROC									; Game settings initializing for speed
