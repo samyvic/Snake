@@ -72,6 +72,7 @@ ENDM
     playerName   	BYTE    13 + 1 DUP (?)
     choice       	BYTE    0							; menu selection variable
 
+	score        	DWORD   0
 					
 
 ;Begin of the code
@@ -113,7 +114,10 @@ StartGame PROC										; Handles main game state logic and loop.
 
      X00:										; Initial start game
 	CALL	DrawMainMenu									
-
+     X01:
+	CALL	ScoureInfo
+	CALL	PrintWalls
+	CALL	Waitmsg
 
 	RET
 StartGame ENDP
@@ -234,6 +238,21 @@ DrawMainMenu PROC
 
 	RET
 DrawMainMenu ENDP
+
+ScoureInfo PROC										; Display scoure and player name
+
+	mGotoxy	2, 0									
+	mWrite	"Score:  "    
+	MOV	EAX, score								; Displays all info on top of the screen
+	CALL	WriteInt								
+
+	mGotoxy 18, 0								; comment
+	mWrite	"Name: "
+	mWriteString OFFSET playerName   
+
+	RET
+ScoureInfo ENDP
+
 
 
 END main
