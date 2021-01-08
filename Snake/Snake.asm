@@ -126,6 +126,8 @@ DrawTitleScreen PROC									; Writes the title screen stuff, nothing special
 	CALL	ClrScr	
 	CALL	PrintWalls
 
+	MOV EAX, cyan+ (black * 16)                         ;make  ASCII Title "Snake"  cyan
+        CALL SetTextColor	
 	
 			mGotoxy 22, 3									; Draw ASCII Title "Snake"
 			mWrite	" _____                _         "	
@@ -143,7 +145,9 @@ DrawTitleScreen PROC									; Writes the title screen stuff, nothing special
 
 
 	
-					
+		MOV EAX, white + (black * 16)           ;make  our names  white
+        CALL SetTextColor	
+		
 	mGotoxy 32, 10						; the project name and our names
 	mWrite	"Snake's team"
 	mGotoxy 29, 12
@@ -157,11 +161,14 @@ DrawTitleScreen PROC									; Writes the title screen stuff, nothing special
 	mGotoxy 29, 16
 	mWrite	"5-Mohamed omar"
 
+	MOV EAX, red + (black * 16)           ; make the waiting msg red color 
+	CALL SetTextColor
 
 mGotoxy 26,18                           ; waiting msg "press any key to containue..."
 CALL  WaitMsg
 mGotoxy 0,0
-	
+MOV EAX, white + (black * 16)          ; reset color to white
+CALL SetTextColor
 	
 	   
 	RET
