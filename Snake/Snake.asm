@@ -476,6 +476,19 @@ MoveSnake ENDP
 
 ;this proc check that the snake hits the border to enter it on "game over"
 
+;This figure shows the boundaries that if the snake hits it, it gets game over
+;----------------------
+;|(1 1 1 1 1 1 1 1 1 )|
+;| 0                  | 
+;| 0            (maxX)|
+;| 0                  |  
+;| 0      (maxY)      |
+;|--------------------|
+;1---> top 
+;0--->left
+;(maxX)---> Right
+;(maxY)---> Left
+
 IsCollision PROc
 
 CMP	currentX, 0				         ; Did the snake hit the left side??		
