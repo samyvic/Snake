@@ -476,8 +476,27 @@ MoveSnake PROC
     
 	INVOKE	Sleep, speed								; Suspends execution, for a specified interval equals to the interval of speed 
       
+	MOV	ECX, 0  
+	MOV	CL, tailIndex								; Tail index in the snakebody array
 
+    	mGotoxy SnakeBody[2 * ECX].x, SnakeBody[2 * ECX].y  				; Go to the coordinates of the old tail
+    	mWrite	" "									; Delete the old tail
+
+	INC	tailIndex								; Update the tail index (moving one step)
+	INC	headIndex								; Udpate the head index (moving one step)
+
+	CMP	headIndex, maxSize							; If the head reaches the end of the array
+	JNE	X01
+	MOV	headIndex, 0								; make the head index start again from the begining
+
+   	X00:
+	CMP	tailIndex, maxSize							; If the tail reaches the end of the array
+	JNE	X01
+	MOV	tailIndex, 0								; make the tail index start again from the begining
+
+   	X01:
 	RET
+	
 MoveSnake ENDP
 
 ;this proc check that the snake hits the border to enter it on "game over"
