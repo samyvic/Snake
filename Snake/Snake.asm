@@ -487,7 +487,7 @@ MoveSnake ENDP
 ;1---> top 
 ;0--->left
 ;(maxX)---> Right
-;(maxY)---> Left
+;(maxY)---> Bottom
 
 IsCollision PROc
 
