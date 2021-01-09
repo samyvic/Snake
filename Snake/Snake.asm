@@ -60,6 +60,12 @@ AXIS STRUCT										; Struct used to put the seed of food and keep track of sna
     y BYTE 0
 AXIS ENDS
 
+; KeyCodes:
+	VK_LEFT		EQU	25h  ; key code for left arrow
+	VK_UP		EQU	26h  ; key code for up arrow
+	VK_RIGHT	EQU	27h  ; key code for right arrow
+	VK_DOWN		EQU	28h  ; key code for down arrow
+
 ;Some vars
 
 ; Game "Window" Setup:
