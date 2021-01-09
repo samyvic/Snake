@@ -86,6 +86,10 @@ AXIS ENDS
         currentY	BYTE    10   ; Y of headsnake							
         headIndex   BYTE    3   ; index of headsnake in array of 255 elements
         tailIndex   BYTE    0   ; index of headsnake in array of 255 elements
+	RIGHT BYTE    1		; Initialize with snake moving right
+	LEFT  BYTE    0							
+    	UP    BYTE    0
+    	DOWN  BYTE    0
 	
 	
 ;Begin of the code
@@ -317,5 +321,20 @@ Grow PROC										; Check if snake ate the food
         RET
 Grow ENDP
 
+SetDirection PROC, R:BYTE, L:BYTE, U:BYTE, D:BYTE	
+
+	MOV	DL, R										; When the right arrow is pressed, then set the direction to move right
+	MOV	RIGHT, DL
+    
+	MOV	DL, L										; same logic for the other arrows
+	MOV	LEFT, DL								
+    
+	MOV	DL, U
+	MOV	UP, DL
+    
+	MOV	DL, D
+	MOV	DOWN, DL
+	RET
+SetDirection ENDP
 
 END main
