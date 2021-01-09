@@ -68,7 +68,10 @@ AXIS ENDS
 	wallHor       	EQU       "--------------------------------------------------------------------------------"
 	wallVert      	EQU       '|'
 	maxSize		EQU       255
-											
+									
+									
+									; Prototypes:
+GetKeyState PROTO, nVirtKey:DWORD
 
 ;data 
 .data
@@ -97,6 +100,12 @@ AXIS ENDS
 
   main PROC 
                  ; our main process that handle all the logics and functions
+
+
+
+
+
+
 									
 	CALL	DrawTitleScreen								; Load Title Screen(first of all)
 
@@ -112,7 +121,7 @@ AXIS ENDS
 	
       X02:										
         CALL	Grow
-
+	    CALL	KeySync									; Did I press any keys?
 	RET
 
 	
@@ -336,5 +345,86 @@ SetDirection PROC, R:BYTE, L:BYTE, U:BYTE, D:BYTE
 	MOV	DOWN, DL
 	RET
 SetDirection ENDP
+
+
+KeySync PROC										; Handles arrow key presses
+
+  	X00:
+        MOV	AH, 0
+        INVOKE GetKeyState, VK_DOWN						
+        CMP	AH, 0									; Pressed? AH is 1 --> Key Is Pressed
+        JE	X01									; IF not pressed, jump to next logic
+        CMP	currentY, maxY								; Are we in bounds?
+        JNL	X01									; IF not within bounds jump to next logic
+        INC	currentY								; IF in bounds, Increment y index
+        INVOKE	SetDirection, 0, 0, 0, 1						; Travel in -y direction, DOWN is set
+        RET
+
+  	X01:
+        MOV     AH, 0									; All key presses work the same way
+        INVOKE  GetKeyState, VK_UP							; If you are not within bounds you fall through to
+        CMP     AH, 0									;    the bottom
+        JE      X02
+        CMP     currentY, 0
+        JNG     X02  
+        DEC     currentY
+        INVOKE  SetDirection, 0, 0, 1, 0
+        RET
+
+    X02:     
+        MOV     AH, 0									; See  X01 comments
+        INVOKE  GetKeyState, VK_LEFT						
+        CMP     AH, 0   
+        JE      X03
+        CMP     currentX, 0
+        JNG     X03 
+        DEC     currentX
+        INVOKE  SetDirection, 0, 1, 0, 0
+        RET
+
+    X03:  
+        MOV		AH, 0								; See  X01 comments
+        INVOKE  GetKeyState, VK_RIGHT
+        CMP     AH, 0   
+        JE      X04
+        CMP     currentX, maxX
+        JNL     X04 
+        INC     currentX
+        INVOKE  SetDirection, 1, 0, 0, 0
+        RET
+
+    X04:     
+        CMP     RIGHT, 0								; Has RIGHT been set?
+        JE      X05									; IF RIGHT has not been set jump to next logic
+        CMP     currentX, maxX								; Are we out of bounds?
+        JNL     X05									; IF out of bounds, jump to next logic
+        INC     currentX								; IF in bounds, travel x direction
+    
+	X05:
+        CMP     LEFT, 0									; See X04 comments
+        JE	X06
+        CMP     currentX, 0
+        JNG     X06
+        DEC     currentX
+    
+	X06:
+        CMP     UP, 0									; See X04 comments
+        JE      X07
+        CMP     currentY, 0
+        JNG     X07
+        DEC     currentY
+
+    X07:
+        CMP     DOWN, 0									; See X04 comments
+        JE      X08
+        CMP     currentY, maxY
+        JNL     X08
+        INC     currentY
+
+    X08:													
+        RET													
+KeySync ENDP
+
+
 
 END main
