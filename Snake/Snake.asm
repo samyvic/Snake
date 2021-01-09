@@ -124,6 +124,9 @@ GetKeyState PROTO STDCALL, nVirtKey:DWORD
 	    CALL	KeySync									; Did I press any keys?
 	RET
 
+	X03:      
+        CALL	MoveSnake								; IF game is not over, continue playing
+	JMP	X02
 	
 main ENDP
 
@@ -413,11 +416,11 @@ KeySync PROC										; Handles arrow key presses
 	; the next logics to make the snake in contionous moving if we didnt changed the direction!
 
     X04:     
-        CMP     RIGHT, 0								; have we changed our direction?
+        CMP     RIGHT, 0							; have we changed our direction?
         JE      X05									; if RIGHT has been changed jump to next logic
-        CMP     currentX, maxX								; Are we out of bounds?
+        CMP     currentX, maxX						; Are we out of bounds?
         JNL     X08									; if out of bounds, just return
-        INC     currentX                                                                ; if above conditions are true , travel x direction
+        INC     currentX                            ; if above conditions are true , travel x direction
 	ret
 	
 	;the next three logics as same as the previous one!
@@ -451,6 +454,24 @@ KeySync PROC										; Handles arrow key presses
         RET													
 KeySync ENDP
 
+MoveSnake PROC
+	MOV	ECX, 0
+	MOV	CL, headIndex								; Head index in the snakebody array
+    
+	MOV	AL, currentX								; new (updated) current X and Y coordinates of the snake head
+	MOV	AH, currentY								; moving them to AL and Ah
 
+	MOV	SnakeBody[2 * ECX].x, AL						; moving the snake body to the new position
+	MOV	SnakeBody[2 * ECX].y, AH						; [2*ECX] --> each array element is 2 bytes 
+															
+	mGotoxy SnakeBody[2 * ECX].x, SnakeBody[2 * ECX].y				; moving the cursor to the new postion
+	MOV	AL, snakeChar									
+	CALL	WriteChar								; printing a snakechar to the screen
+    
+	INVOKE	Sleep, speed								; Suspends execution, for a specified interval equals to the interval of speed 
+      
+
+	RET
+MoveSnake ENDP
 
 END main
