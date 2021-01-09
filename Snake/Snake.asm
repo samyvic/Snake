@@ -259,9 +259,16 @@ DrawMainMenu PROC
 
     X01:
 	CMP	choice, '2'							; Same as above case
-	JNE	X02
+	JNE	X0false
 	MOV	speed, 50
 	JMP	X02
+
+	 X0false:
+	INVOKE	Sleep, 100
+	mGotoxy 0, 0									; Reset cursor, clear screen
+	CALL	DrawMainMenu
+	RET
+
 
     X02:
 	INVOKE	Sleep, 100
