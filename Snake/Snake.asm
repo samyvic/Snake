@@ -71,7 +71,7 @@ AXIS ENDS
 									
 									
 									; Prototypes:
-GetKeyState PROTO, nVirtKey:DWORD
+GetKeyState PROTO STDCALL, nVirtKey:DWORD
 
 ;data 
 .data
