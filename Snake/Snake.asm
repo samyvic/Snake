@@ -105,35 +105,34 @@ GetKeyState PROTO STDCALL, nVirtKey:DWORD
 .code
 
   main PROC 
-                 ; our main process that handle all the logics and functions
-
-
-
-
-
-
-									
-	CALL	DrawTitleScreen								; Load Title Screen(first of all)
-
-     X00:										; entering name and level(starting the game)
-	CALL	DrawMainMenu
-	
-     X01:
+  
+   ; our main process that handles all the logics and functions
+								
+	CALL	DrawTitleScreen						; Load Title Screen(first of all)								
+	CALL	DrawMainMenu						; entering name and level(starting the game)
 	CALL	ClrScr										
-	CALL	ScoureInfo
-	CALL	PrintWalls
-	CALL	GenerateFood
-	call waitmsg
+	CALL	PrintWalls						; printing the walls of the game
+	CALL	GenerateFood						; using randomize to produce a food seed
 	
-      X02:										
-        CALL	Grow
-	    CALL	KeySync									; Did I press any keys?
-	RET
+    X00:										
+        CALL	Grow							; Checking a the snake ate the food, produce a new one
+	CALL	KeySync							; Getting directions from the player
 
-	X03:      
-        CALL	MoveSnake								; IF game is not over, continue playing
-	JMP	X02
+    X01:
+	CALL	IsCollision						; check if the snake collides with the wall
+	CMP	EAX, 1							; EAX holds whether game is over or not
+	JNE	X02							; Continue if there is no collision
+	JMP	X03							; If the snake hit the wall, jump to GameOver
 	
+    X02:      
+        CALL	MoveSnake						; Keep the snake moving 
+	CALL	ScoureInfo						; updating the score
+	JMP	X00							; loop to get a new direction from keySync
+
+    X03:																																			
+	INVOKE	ExitProcess, 0						; Exit game
+
+	RET	
 main ENDP
 
 
