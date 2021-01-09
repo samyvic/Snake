@@ -82,6 +82,10 @@ AXIS ENDS
 	snakeChar    	BYTE	'#'
 	foodPoint	AXIS    <0,0>							
 	SnakeBody    	AXIS    maxSize DUP(<0,0>)	
+	currentX	BYTE    40   ; 	X of headsnake						
+        currentY	BYTE    10   ; Y of headsnake							
+        headIndex   BYTE    3   ; index of headsnake in array of 255 elements
+        tailIndex   BYTE    0   ; index of headsnake in array of 255 elements
 	
 	
 ;Begin of the code
