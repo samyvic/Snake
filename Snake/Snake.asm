@@ -297,5 +297,22 @@ GenerateFood PROC									; Put food on a random point
 	RET
 GenerateFood ENDP
 
+Grow PROC										; Check if snake ate the food
+	MOV     AH, currentX
+        MOV     AL, currentY
+
+        CMP     AH, FoodPoint.x								; Is my X equal to the Food X
+        JNE     X00									; IF not, Exit PROC
+        CMP     AL, FoodPoint.y								; Is my y equal to the Food Y
+        JNE     X00
+
+        CALL    GenerateFood								; IF we are "colliding" with Food
+        INC     headIndex								; Move head index for new growth
+        ADD     score, 10								; Score is incremented after eating
+   
+	X00:
+        RET
+Grow ENDP
+
 
 END main
