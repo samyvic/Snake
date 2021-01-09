@@ -357,72 +357,79 @@ SetDirection ENDP
 KeySync PROC										; Handles arrow key presses
 
   	X00:
-        MOV	AH, 0
-        INVOKE GetKeyState, VK_DOWN						
-        CMP	AH, 0									; Pressed? AH is 1 --> Key Is Pressed
-        JE	X01									; IF not pressed, jump to next logic
-        CMP	currentY, maxY								; Are we in bounds?
-        JNL	X01									; IF not within bounds jump to next logic
-        INC	currentY								; IF in bounds, Increment y index
+        MOV	AH, 0                                                                   ; Make AH equal zero to work on it
+        INVOKE GetKeyState, VK_DOWN                                                     ; getting states of key was pressed						
+        CMP	AH, 0									; if the key Pressed? so AH is 1 --> Key Is Pressed
+        JE	X01									; id not pressed, jump to next logic
+        CMP	currentY, maxY								; Are our snake  in bounds?
+        JNL	X08									; if not within bounds jump to X08 which just retrn
+        INC	currentY								; if all above conditions are true , Increment y index
         INVOKE	SetDirection, 0, 0, 0, 1						; Travel in -y direction, DOWN is set
         RET
+	
+	;note that the next three logics works as same as the previous one so no need to add comments
 
   	X01:
-        MOV     AH, 0									; All key presses work the same way
-        INVOKE  GetKeyState, VK_UP							; If you are not within bounds you fall through to
-        CMP     AH, 0									;    the bottom
+        MOV     AH, 0									
+        INVOKE  GetKeyState, VK_UP							
+        CMP     AH, 0									
         JE      X02
         CMP     currentY, 0
-        JNG     X02  
+        JNG     X08  
         DEC     currentY
         INVOKE  SetDirection, 0, 0, 1, 0
         RET
 
     X02:     
-        MOV     AH, 0									; See  X01 comments
+        MOV     AH, 0									
         INVOKE  GetKeyState, VK_LEFT						
         CMP     AH, 0   
         JE      X03
         CMP     currentX, 0
-        JNG     X03 
+        JNG     X08 
         DEC     currentX
         INVOKE  SetDirection, 0, 1, 0, 0
         RET
 
     X03:  
-        MOV		AH, 0								; See  X01 comments
+        MOV		AH, 0								
         INVOKE  GetKeyState, VK_RIGHT
         CMP     AH, 0   
         JE      X04
         CMP     currentX, maxX
-        JNL     X04 
+        JNL     X08 
         INC     currentX
         INVOKE  SetDirection, 1, 0, 0, 0
         RET
+	
+	; the next logics to make the snake in contionous moving if we didnt changed the direction!
 
     X04:     
-        CMP     RIGHT, 0								; Has RIGHT been set?
-        JE      X05									; IF RIGHT has not been set jump to next logic
+        CMP     RIGHT, 0								; have we changed our direction?
+        JE      X05									; if RIGHT has been changed jump to next logic
         CMP     currentX, maxX								; Are we out of bounds?
-        JNL     X05									; IF out of bounds, jump to next logic
-        INC     currentX								; IF in bounds, travel x direction
+        JNL     X08									; if out of bounds, just return
+        INC     currentX								; if above conditions are true , travel x direction
+	
+	;the next three logics as same as the previous one!
+	
     
 	X05:
-        CMP     LEFT, 0									; See X04 comments
+        CMP     LEFT, 0									
         JE	X06
         CMP     currentX, 0
-        JNG     X06
+        JNG     X08
         DEC     currentX
     
 	X06:
-        CMP     UP, 0									; See X04 comments
+        CMP     UP, 0									
         JE      X07
         CMP     currentY, 0
-        JNG     X07
+        JNG     X08
         DEC     currentY
 
     X07:
-        CMP     DOWN, 0									; See X04 comments
+        CMP     DOWN, 0									
         JE      X08
         CMP     currentY, maxY
         JNL     X08
