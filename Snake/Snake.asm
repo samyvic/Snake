@@ -91,9 +91,27 @@ AXIS ENDS
 ;Begin of the code
 .code
 
-main PROC
-	CALL	StartGame
+  main PROC 
+                 ; our main process that handle all the logics and functions
+									
+	CALL	DrawTitleScreen								; Load Title Screen(first of all)
+
+     X00:										; entering name and level(starting the game)
+	CALL	DrawMainMenu
+	
+     X01:
+	CALL	ClrScr										
+	CALL	ScoureInfo
+	CALL	PrintWalls
+	CALL	GenerateFood
+	call waitmsg
+	
+      X02:										
+        CALL	Grow
+
 	RET
+
+	
 main ENDP
 
 
@@ -121,22 +139,7 @@ PrintWalls PROC										; Draw Walls to screen
 PrintWalls ENDP
 
 
-;This function is used to manage all the gameplay in sequence
-StartGame PROC										; Handles main game state logic and loop.
-	CALL	DrawTitleScreen								; Load Title Screen
 
-     X00:										; Initial start game
-	CALL	DrawMainMenu
-	
-     X01:
-	CALL	ClrScr										
-	CALL	ScoureInfo
-	CALL	PrintWalls
-	CALL	GenerateFood
-	call waitmsg
-
-	RET
-StartGame ENDP
 
 
 ;Start game window
