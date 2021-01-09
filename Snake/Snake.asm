@@ -363,6 +363,8 @@ KeySync PROC										; Handles arrow key presses
         JE	X01									; id not pressed, jump to next logic
         CMP	currentY, maxY								; Are our snake  in bounds?
         JNL	X08									; if not within bounds jump to X08 which just retrn
+	CMP UP, 1                                                                       ; checking current direction of the snake
+	JE X08                                                                          ; return if we clicked in opposite direction of snake
         INC	currentY								; if all above conditions are true , Increment y index
         INVOKE	SetDirection, 0, 0, 0, 1						; Travel in -y direction, DOWN is set
         RET
@@ -375,7 +377,9 @@ KeySync PROC										; Handles arrow key presses
         CMP     AH, 0									
         JE      X02
         CMP     currentY, 0
-        JNG     X08  
+        JNG     X08 
+	CMP DOWN, 1                                                                     
+	JE X08                                                                          
         DEC     currentY
         INVOKE  SetDirection, 0, 0, 1, 0
         RET
@@ -386,7 +390,9 @@ KeySync PROC										; Handles arrow key presses
         CMP     AH, 0   
         JE      X03
         CMP     currentX, 0
-        JNG     X08 
+        JNG     X08
+	CMP RIGHT, 1
+	JE X08
         DEC     currentX
         INVOKE  SetDirection, 0, 1, 0, 0
         RET
@@ -398,6 +404,8 @@ KeySync PROC										; Handles arrow key presses
         JE      X04
         CMP     currentX, maxX
         JNL     X08 
+	CMP LEFT, 1
+	JE X08
         INC     currentX
         INVOKE  SetDirection, 1, 0, 0, 0
         RET
@@ -409,7 +417,8 @@ KeySync PROC										; Handles arrow key presses
         JE      X05									; if RIGHT has been changed jump to next logic
         CMP     currentX, maxX								; Are we out of bounds?
         JNL     X08									; if out of bounds, just return
-        INC     currentX								; if above conditions are true , travel x direction
+        INC     currentX                                                                ; if above conditions are true , travel x direction
+	ret
 	
 	;the next three logics as same as the previous one!
 	
@@ -420,6 +429,7 @@ KeySync PROC										; Handles arrow key presses
         CMP     currentX, 0
         JNG     X08
         DEC     currentX
+	ret
     
 	X06:
         CMP     UP, 0									
@@ -427,6 +437,7 @@ KeySync PROC										; Handles arrow key presses
         CMP     currentY, 0
         JNG     X08
         DEC     currentY
+	ret
 
     X07:
         CMP     DOWN, 0									
@@ -434,6 +445,7 @@ KeySync PROC										; Handles arrow key presses
         CMP     currentY, maxY
         JNL     X08
         INC     currentY
+	ret
 
     X08:													
         RET													
