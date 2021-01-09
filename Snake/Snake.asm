@@ -6,7 +6,7 @@ TITLE Snake V1							(Snake.asm)
 ;Ahmed Samy
 ;Mostafa Ramzy
 ;Mahmoud Diab
-;Mohamed Omar
+;Mohamed Mahmoud Omar
 ;This project is built by 32 assembly using Ivrine32 library
 
 ; Files:
@@ -175,7 +175,7 @@ DrawTitleScreen PROC									; Writes the title screen stuff, nothing special
 	mGotoxy 29, 15
 	mWrite	"4-Mostafa ramzy"
 	mGotoxy 29, 16
-	mWrite	"5-Mohamed omar"
+	mWrite	"5-Mohamed Mahmoud Omar"
 
 	MOV EAX, red + (black * 16)           ; make the waiting msg red color 
 	CALL SetTextColor
