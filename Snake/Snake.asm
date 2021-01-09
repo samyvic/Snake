@@ -366,8 +366,8 @@ KeySync PROC										; Handles arrow key presses
         JE	X01									; id not pressed, jump to next logic
         CMP	currentY, maxY								; Are our snake  in bounds?
         JNL	X08									; if not within bounds jump to X08 which just retrn
-	CMP UP, 1                                                                       ; checking current direction of the snake
-	JE X08                                                                          ; return if we clicked in opposite direction of snake
+		CMP UP, 1                                                                       ; checking current direction of the snake
+		JE X08                                                                          ; return if we clicked in opposite direction of snake
         INC	currentY								; if all above conditions are true , Increment y index
         INVOKE	SetDirection, 0, 0, 0, 1						; Travel in -y direction, DOWN is set
         RET
@@ -473,5 +473,28 @@ MoveSnake PROC
 
 	RET
 MoveSnake ENDP
+
+;this proc check that the snake hits the border to enter it on "game over"
+
+IsCollision PROc
+
+CMP	currentX, 0				         ; Did the snake hit the left side??		
+JE	X00										
+CMP	currentY, 1						 ; Did the snake hit the top side??
+JE	X00
+CMP	currentX, maxX					 ; Did the snake hit the right side..??
+JE	X00
+CMP	currentY, maxY					 ; Did the snake hit the bottom side..??
+JE	X00
+JMP	X01								; if the snake didn't hit any walls ...jamp
+	
+X00:
+MOV	EAX, 1							;this register (EAX) check if the game is over or not..
+RET
+
+X01:
+MOV	EAX, 0									; 0 means that the gme is not over .
+RET
+IsCollision ENDP
 
 END main
