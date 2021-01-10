@@ -132,7 +132,10 @@ GetKeyState PROTO STDCALL, nVirtKey:DWORD
 	JMP	X00							; loop to get a new direction from keySync
 
     X03:																																			
-	INVOKE	ExitProcess, 0						; Exit game
+	     INVOKE	Sleep, 100
+        CALL	DrawGameOver																												
+
+   
 
 	RET	
 main ENDP
@@ -535,5 +538,40 @@ X01:
 MOV	EAX, 0									; 0 means that the gme is not over .
 RET
 IsCollision ENDP
+
+
+DrawGameOver PROC									; Draw game over screen with score
+	CALL	Clrscr
+	CALL	PrintWalls
+
+	MOV EAX, cyan+ (black * 16)                         ;make  ASCII Title "Snake"  cyan
+        CALL SetTextColor	
+	
+			mGotoxy 7, 3									; Draw ASCII Title "Snake"
+			mWrite	"  ________                        ________                     "	
+			mGotoxy 7, 4									
+			mWrite	" /  _____/_____    _____   ____   \_____  \___  __ ___________ "	
+			mGotoxy 7, 5									
+			mWrite	"/   \  ___\__  \  /     \_/ __ \   /   |   \  \/ // __ \_  __ \"	
+			mGotoxy 7, 6									
+			mWrite	"\    \_\  \/ __ \|  Y Y  \  ___/  /    |    \   /\  ___/|  | \/"	
+			mGotoxy 7, 7									
+			mWrite	" \______  (____  /__|_|  /\___  > \_______  /\_/  \___  >__|   "	
+			mGotoxy 7, 8									
+			mWrite	"        \/     \/      \/     \/          \/          \/       "	
+
+	mGotoxy 30, 13  
+	mWrite	"Final Score:"
+	mGotoxy 42, 13
+
+	MOV	EAX, score								; Reset screen and display score
+	CALL	WriteInt
+	INVOKE	Sleep, 100
+	
+
+
+		
+	RET													
+DrawGameOver ENDP
 
 END main
