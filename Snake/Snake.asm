@@ -285,6 +285,9 @@ DrawMainMenu PROC
 	mGotoxy 0, 0									; Reset cursor, clear screen
 	CALL	ClrScr									; Exit main menu
 
+	MOV EAX, cyan + (black * 16)                    ; make the color cyan      
+    CALL SetTextColor
+
 	RET
 DrawMainMenu ENDP
 
@@ -519,6 +522,7 @@ MoveSnake ENDP
 ;(0 0 0)           (maxX)
 ;|                    |  
 ;|                    |
+;|                    |
 ;|-----(maxY)---------|
 ;1---> top 
 ;0--->left
@@ -570,7 +574,7 @@ DrawGameOver PROC									; Draw game over screen with showing score
 	CALL	Clrscr
 	CALL	PrintWalls
 
-	MOV EAX, cyan+ (black * 16)                         ;make  ASCII Title "Game Over"  cyan
+	MOV EAX, Red+ (black * 16)                         ;make  ASCII Title "Game Over"  Red
         CALL SetTextColor	
 	
 			mGotoxy 7, 3									; Draw ASCII Title "Game Over"
