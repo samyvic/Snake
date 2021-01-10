@@ -258,6 +258,8 @@ DrawMainMenu PROC
 	CALL	ReadChar    
 	MOV	choice, AL								; get the level choice
 	CALL	WriteChar
+										
+							
 											; if the choice is "0"
 	CMP	choice, '0'						    ; that means this is the first level
 	JNE	X00									; if the choice isn't "0" check the other cases
@@ -272,16 +274,9 @@ DrawMainMenu PROC
 
     X01:
 	CMP	choice, '2'							; Same as above case
-	JNE	X0false
+	JNE X02
 	MOV	speed, 50
 	JMP	X02
-
-	 X0false:
-	INVOKE	Sleep, 100
-	mGotoxy 0, 0									; Reset cursor, clear screen
-	CALL	DrawMainMenu
-	RET
-
 
     X02:
 	INVOKE	Sleep, 100
@@ -301,6 +296,11 @@ ScoureInfo PROC										; Display scoure and player name
 	mGotoxy 18, 0								; comment
 	mWrite	"Name: "
 	mWriteString OFFSET playerName   
+
+	mGotoxy	34, 0									
+	mWrite	"Time Delay:  "    
+	MOV	EAX, speed								; Displays time delay
+	CALL	WriteInt	
 
 	RET
 ScoureInfo ENDP
