@@ -540,14 +540,14 @@ RET
 IsCollision ENDP
 
 
-DrawGameOver PROC									; Draw game over screen with score
+DrawGameOver PROC									; Draw game over screen with showing score
 	CALL	Clrscr
 	CALL	PrintWalls
 
-	MOV EAX, cyan+ (black * 16)                         ;make  ASCII Title "Snake"  cyan
+	MOV EAX, cyan+ (black * 16)                         ;make  ASCII Title "Game Over"  cyan
         CALL SetTextColor	
 	
-			mGotoxy 7, 3									; Draw ASCII Title "Snake"
+			mGotoxy 7, 3									; Draw ASCII Title "Game Over"
 			mWrite	"  ________                        ________                     "	
 			mGotoxy 7, 4									
 			mWrite	" /  _____/_____    _____   ____   \_____  \___  __ ___________ "	
@@ -567,7 +567,13 @@ DrawGameOver PROC									; Draw game over screen with score
 	MOV	EAX, score								; Reset screen and display score
 	CALL	WriteInt
 	INVOKE	Sleep, 100
-	
+															
+
+	mGotoxy 30, 16                          ; waiting msg "press any key to containue..."
+CALL  WaitMsg
+mGotoxy 0,0
+MOV EAX, white + (black * 16)          ; reset color to white
+CALL	DrawTitleScreen						; Load Title Screen again	
 
 
 		
