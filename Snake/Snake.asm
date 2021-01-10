@@ -102,6 +102,8 @@ GetKeyState PROTO STDCALL, nVirtKey:DWORD
     	DOWN  BYTE    0
 	    lives     BYTE    3   
 
+
+
 	
 ;Begin of the code
 .code
@@ -301,6 +303,11 @@ ScoureInfo PROC										; Display scoure and player name
 	mWrite	"Time Delay:  "    
 	MOV	EAX, speed								; Displays time delay
 	CALL	WriteInt	
+
+	mGotoxy	56, 0									
+	mWrite	"Lives:  "    
+	MOV	al, lives								; Displays time delay
+	CALL	WriteInt
 
 	RET
 ScoureInfo ENDP
@@ -607,5 +614,6 @@ ResetData PROC
 	INVOKE SetDirection, 1,0,0,0
 	RET
 ResetData ENDP 
+
 
 END main
