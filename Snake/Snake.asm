@@ -85,7 +85,6 @@ GetKeyState PROTO STDCALL, nVirtKey:DWORD
 	speed			DWORD   100							; How fast we update the sleep function in ms
     playerName   	BYTE    13 + 1 DUP (?)
     choice       	BYTE    0							; menu selection variable
-
 	score        	DWORD   0
 	foodChar     	BYTE   '0'
 	snakeChar    	BYTE	'O'
@@ -101,7 +100,8 @@ GetKeyState PROTO STDCALL, nVirtKey:DWORD
 	LEFT  BYTE    0							
     	UP    BYTE    0
     	DOWN  BYTE    0
-	
+	    lives     BYTE    3   
+
 	
 ;Begin of the code
 .code
@@ -531,13 +531,32 @@ JE	X00
 JMP	X01								; if the snake didn't hit any walls ...jamp
 	
 X00:
-MOV	EAX, 1							;this register (EAX) check if the game is over or not..
+DEC lives				;when the snake hit the wall decrease one live
+MOV cl, lives
+CMP cl,0				
+JNE X02				    ;IF CL > 0 , reset the snake position and continue playing 
+MOV EAX, 1              ;when EAX is equal 1 , then go to game over
 RET
 
+
+X02:
+CALL ClrScr
+call printwalls
+call ScoureInfo
+call generateFood
+call grow
+call ResetData
+jmp X01
+
 X01:
-MOV	EAX, 0									; 0 means that the gme is not over .
+MOV EAX, 0 ; 0 means that the game is not over .
 RET
+
 IsCollision ENDP
+
+
+
+
 
 
 DrawGameOver PROC									; Draw game over screen with showing score
@@ -579,5 +598,14 @@ CALL	DrawTitleScreen						; Load Title Screen again
 		
 	RET													
 DrawGameOver ENDP
+
+ResetData PROC
+	MOV currentX, 40
+	MOV currentY, 10
+	MOV headIndex, 3
+	MOV tailIndex, 0
+	INVOKE SetDirection, 1,0,0,0
+	RET
+ResetData ENDP 
 
 END main
