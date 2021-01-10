@@ -88,12 +88,14 @@ GetKeyState PROTO STDCALL, nVirtKey:DWORD
 
 	score        	DWORD   0
 	foodChar     	BYTE   '0'
-	snakeChar    	BYTE	'#'
+	snakeChar    	BYTE	'O'
+	FsnakeChar    	BYTE	'#'
 	foodPoint	AXIS    <0,0>							
 	SnakeBody    	AXIS    maxSize DUP(<0,0>)	
 	currentX	BYTE    40   ; 	X of headsnake						
         currentY	BYTE    10   ; Y of headsnake							
         headIndex   BYTE    3   ; index of headsnake in array of 255 elements
+		 headIndextest   BYTE    3   ; index of headsnake in array of 255 elements
         tailIndex   BYTE    0   ; index of headsnake in array of 255 elements
 	RIGHT BYTE    1		; Initialize with snake moving right
 	LEFT  BYTE    0							
