@@ -337,14 +337,14 @@ Grow PROC										; Check if snake ate the food
 	MOV     AH, currentX
         MOV     AL, currentY
 
-        CMP     AH, FoodPoint.x								; Is my X equal to the Food X
-        JNE     X00									; IF not, Exit PROC
-        CMP     AL, FoodPoint.y								; Is my y equal to the Food Y
+        CMP     AH, FoodPoint.x							; Is my X equal to the Food X
+        JNE     X00									    ; IF not, Exit PROC
+        CMP     AL, FoodPoint.y							; Is my y equal to the Food Y
         JNE     X00
 
-        CALL    GenerateFood								; IF we are "colliding" with Food
+        CALL    GenerateFood							; IF we are "colliding" with Food
         INC     headIndex								; Move head index for new growth
-        ADD     score, 10								; Score is incremented after eating
+        ADD     score, 1								; Score is incremented after eating
    
 	X00:
         RET
@@ -566,7 +566,7 @@ DrawGameOver PROC									; Draw game over screen with showing score
 
 	MOV	EAX, score								; Reset screen and display score
 	CALL	WriteInt
-	INVOKE	Sleep, 100
+	INVOKE	Sleep, 5000
 															
 
 	mGotoxy 30, 16                          ; waiting msg "press any key to containue..."
