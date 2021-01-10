@@ -15,7 +15,7 @@ INCLUDELIB	user32.lib								; GetKeyState
 
 
 ; Macros:
-mGotoxy MACRO X:REQ, Y:REQ								; Reposition cursor to x,y position
+mGotoxy MACRO X:REQ, Y:REQ								; make the cursor going to x,y coordinates
 	PUSH	EDX
 	MOV	DH, Y
 	MOV	DL, X
@@ -115,12 +115,12 @@ GetKeyState PROTO STDCALL, nVirtKey:DWORD
 	CALL	DrawTitleScreen						; Load Title Screen(first of all)								
 	CALL	DrawMainMenu						; entering name and level(starting the game)
 	CALL	ClrScr										
-	CALL	PrintWalls						; printing the walls of the game
+	CALL	PrintWalls						    ; printing the walls of the game
 	CALL	GenerateFood						; using randomize to produce a food seed
 	
     X00:										
         CALL	Grow							; Checking a the snake ate the food, produce a new one
-	CALL	KeySync							; Getting directions from the player
+	CALL	KeySync							   ; Getting directions from the player
 
     X01:
 	CALL	IsCollision						; check if the snake collides with the wall
@@ -319,13 +319,13 @@ GenerateFood PROC									; Put food on a random point
 	CALL Randomize									; Produce new random seed
 													
 	; Random X Coordinate
-	CALL Random32									; Return random (0 to FFFFFFFFh) in EAX	
+	CALL Random32									; Generates a random value between 0 and FFFFFFFFh
 	XOR	EDX, EDX									; Quickly clears EDX (faster than moving a zero to edx)
 	MOV	ECX, maxX - 3								
 	DIV	ECX											; DIV EAX by ECX, then store EAX=Quotient, EDX=Remainder
 	INC	DL	
 	INC	DL											; Fixing a bug (printing the food in the wall)
-	MOV	foodPoint.x, DL								; Store new Random X Coordinate for Food
+	MOV	foodPoint.x, DL								; Get the x coordinates of the food and store it infoodPoint.x
 
 	; Random Y Coordinate, same deal
 	CALL	Random32
@@ -347,14 +347,14 @@ Grow PROC										; Check if snake ate the food
 	MOV     AH, currentX
         MOV     AL, currentY
 
-        CMP     AH, FoodPoint.x							; Is my X equal to the Food X
+        CMP     AH, FoodPoint.x							; If the snake X is equal to food X
         JNE     X00									    ; IF not, Exit PROC
-        CMP     AL, FoodPoint.y							; Is my y equal to the Food Y
+        CMP     AL, FoodPoint.y							; If the snake Y is equal to food Y
         JNE     X00
 
-        CALL    GenerateFood							; IF we are "colliding" with Food
+        CALL    GenerateFood							; IF the snake is "colliding" with Food
         INC     headIndex								; Move head index for new growth
-        ADD     score, 1								; Score is incremented after eating
+        ADD     score, 1								; Score is incremented after eating by +1
    
 	X00:
         RET
