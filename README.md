@@ -22,7 +22,7 @@ There are many features and options that the user can select:
 |                    |
 --------(maxY)--------
 ```
-## Main Functions
+## Essential Functions
 1. Main Function:
   This function handles the game by calling the other functions and taking the user to the game.
 2. PrintWalls Function:
@@ -41,13 +41,13 @@ There are many features and options that the user can select:
   This function sets the direction to move the snake when pressing of the appropriate arrow.
 9. KeySync Function:
   This function works as a listener in background to detect user key pressing to change the snake direction.
-10. MaveSnake Function:
+10. MoveSnake Function:
   This function is responsible for moving the snake (increasing the head and deleting the tail).
 11. IsCollision Function:
   This function is fired each time the snake moves and it has three cases: 
-  a) If the snake doesn't hit the wall, then continue playing.
-  b) If the snake hits the wall but the players has lives, so decreament lives by 1 and continue playing.
-  c) If the snake hits the wall and the player has no more chances, then the game is over.
+  - If the snake doesn't hit the wall, then continue playing.
+  - If the snake hits the wall but the players has lives, so decreament lives by 1 and continue playing.
+  - If the snake hits the wall and the player has no more chances, then the game is over.
 12. DrawGameOver Function:
   This function prints the gameover window and score.
 13. ResetData Function:
