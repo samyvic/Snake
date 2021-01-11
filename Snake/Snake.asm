@@ -603,7 +603,8 @@ DrawGameOver PROC									; Draw game over screen with showing score
 CALL  WaitMsg
 mGotoxy 0,0
 MOV EAX, white + (black * 16)          ; reset color to white
-CALL	DrawTitleScreen						; Load Title Screen again	
+
+CALL	main						; Load Title Screen again	
 
 
 		
