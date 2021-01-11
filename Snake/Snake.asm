@@ -604,6 +604,7 @@ CALL  WaitMsg
 mGotoxy 0,0
 MOV EAX, white + (black * 16)          ; reset color to white
 
+	MOV lives,3
 CALL ResetData 
 
 
