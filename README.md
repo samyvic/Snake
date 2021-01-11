@@ -11,7 +11,8 @@ There are many features and options that the user can select:
 8. The player has 3 lives 
 
 ## Gameboard map
-
+```
+{
 ------(1 1 1 1)-------
 |                    |
 |					           |
@@ -21,36 +22,37 @@ There are many features and options that the user can select:
 |                    |
 |                    |
 --------(maxY)--------
-
+}
+```
 ## Main Functions
-1. Main Function
+1. Main Function:
   This function handles the game by calling the other functions and taking the user to the game.
-2. PrintWalls Function
+2. PrintWalls Function:
   This function Prints the border of the windows and the wall of the game.
-3. DrawTitleScreen Function
+3. DrawTitleScreen Function:
   This function has the design of the first window (welcome window).
-4. DrawMainMenu Function
+4. DrawMainMenu Function:
   This function has the design of the game configuration, taking the player name and game difficulty.
-5. ScoreInfo Function
+5. ScoreInfo Function:
   This function prints the score and the player name.
-6. GenerateFood Function
+6. GenerateFood Function:
   This function generates food in a random postion (depening on Randomize and random32 functions of ivrine library).
-7. Grow Function
+7. Grow Function:
   This function grows the snake length (increament the head index), and increasing the score.
-9. SetDirection Function
+9. SetDirection Function:
   This function sets the direction to move the snake when pressing of the appropriate arrow.
-9. KeySync Function
+9. KeySync Function:
   This function works as a listener in background to detect user key pressing to change the snake direction.
-10. MaveSnake Function
+10. MaveSnake Function:
   This function is responsible for moving the snake (increasing the head and deleting the tail).
-11. IsCollision Function
+11. IsCollision Function:
   This function is fired each time the snake moves and it has three cases: 
   a) If the snake doesn't hit the wall, then continue playing.
   b) If the snake hits the wall but the players has lives, so decreament lives by 1 and continue playing.
   c) If the snake hits the wall and the player has no more chances, then the game is over.
-12. DrawGameOver Function
+12. DrawGameOver Function:
   This function prints the gameover window and score.
-13. ResetData Function
+13. ResetData Function:
   This function resets the snake position, the head and tail indexes ,and the default direction to allow the player to play again.
   
  ## Macros Functions
