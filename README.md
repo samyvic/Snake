@@ -12,7 +12,6 @@ There are many features and options that the user can select:
 
 ## Gameboard map
 ```
-{
 ------(1 1 1 1)-------
 |                    |
 |					           |
@@ -22,7 +21,6 @@ There are many features and options that the user can select:
 |                    |
 |                    |
 --------(maxY)--------
-}
 ```
 ## Main Functions
 1. Main Function:
