@@ -9,6 +9,11 @@ TITLE Snake V1							(Snake.asm)
 ;Mohamed Mahmoud Omar
 ;This project is built by 32 assembly using Ivrine32 library
 
+;Github 
+;Repo Link : https://github.com/samyvic/Snake
+; ReadMe Link : https://github.com/samyvic/Snake/blob/main/README.md
+;LICENSE Link :  https://github.com/samyvic/Snake/blob/main/LICENSE
+
 ; Files:
 INCLUDE		Irvine32.inc								; GoToXY, Random32, Randomize
 INCLUDELIB	user32.lib								; GetKeyState
