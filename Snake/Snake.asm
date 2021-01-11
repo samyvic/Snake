@@ -296,26 +296,32 @@ DrawMainMenu PROC
 	RET
 DrawMainMenu ENDP
 
-ScoureInfo PROC										; Display scoure and player name
-
+ScoureInfo PROC									; Display scoure and player name
+MOV EAX, green + (black * 16)                   ; scoure color green                  
+CALL SetTextColor
 	mGotoxy	2, 0									
 	mWrite	"Score:  "    
 	MOV	EAX, score								; Displays all info on top of the screen
 	CALL	WriteInt								
-
-	mGotoxy 18, 0								; comment
+MOV EAX, green + (black * 16)                   ; name color green              
+CALL SetTextColor
+	mGotoxy 18, 0								
 	mWrite	"Name: "
 	mWriteString OFFSET playerName   
-
+MOV EAX, green + (black * 16)                   ; time delay color green
+CALL SetTextColor
 	mGotoxy	34, 0									
 	mWrite	"Time Delay:  "    
 	MOV	EAX, speed								; Displays time delay
 	CALL	WriteInt	
-
+MOV EAX, green + (black * 16)                   ; lives color green
+CALL SetTextColor
 	mGotoxy	56, 0									
 	mWrite	"Lives:  "    
-	MOV	al, lives								; Displays time delay
+	MOV	al, lives								; Displays lives
 	CALL	WriteInt
+MOV EAX, cyan + (black * 16)                 ; reset the color to cyan           
+CALL SetTextColor
 
 	RET
 ScoureInfo ENDP
