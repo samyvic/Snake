@@ -604,6 +604,18 @@ CALL  WaitMsg
 mGotoxy 0,0
 MOV EAX, white + (black * 16)          ; reset color to white
 
+;reset gameplay vars
+MOV currentX,40
+MOV currentY,10
+MOV headindex,3
+MOV tailIndex,0
+MOV RIGHT,1
+MOV LEFT,0
+MOV UP,0
+MOV DOWN,0
+MOV lives,3
+
+
 CALL	main						; Load Title Screen again	
 
 
